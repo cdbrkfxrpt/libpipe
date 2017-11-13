@@ -1,2 +1,3 @@
-pipe
-fultz
+tests
+.gdb_history
+.gdb_history/*

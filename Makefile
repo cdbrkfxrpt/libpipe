@@ -1,8 +1,8 @@
 CC=g++
 CXXSTD=-std=c++17
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -O0 -g # -Wfatal-errors
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -O0 -g
 
-TARGETS=pipe # fultz
+TARGETS=tests
 
 all: $(TARGETS)
 
