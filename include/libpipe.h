@@ -14,17 +14,13 @@
 // limitations under the License.
 //
 
-#ifndef LIBPIPE_INCLUDE_DEFINES_H_
-#define LIBPIPE_INCLUDE_DEFINES_H_
+#ifndef LIBPIPE_INCLUDE_LIBPIPE_H_
+#define LIBPIPE_INCLUDE_LIBPIPE_H_
 
-#define IS_PLAIN_FN(T) REQUIRES(pipe::arity<T>() == 0)
-#define IS_UNARY_FN(T) REQUIRES(pipe::arity<T>() == 1)
-#define IS_NON_UNARY_FN(T) REQUIRES(pipe::arity<T>() > 1)
+#include "arity.h"
+#include "defines.h"
+#include "pipe.h"
+#include "first_arg.h"
 
-#define IS_PIPEABLE(T) REQUIRES(pipe::is_pipeable_v<T>)
-#define IS_NOT_PIPEABLE(T) REQUIRES(!pipe::is_pipeable_v<T>)
-
-#define REQUIRES(...) std::enable_if_t<(__VA_ARGS__)>...
-
-#endif  // LIBPIPE_INCLUDE_DEFINES_H_
+#endif  // LIBPIPE_INCLUDE_LIBPIPE_H_
 
