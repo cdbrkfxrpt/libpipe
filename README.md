@@ -2,21 +2,56 @@
 --
 
 ... is a small C++ library implementing the pipe operator syntax. You can use
-it with any functors you want - functions, lambdas and classes implementing the
+it with any callables you want - functions, lambdas and classes implementing the
 `operator()` are all fine.
 
 
 State
 ==
-Unfinished. Works so far with functions, lambdas and functors which aren't
-overloaded in their argument types, i.e. those taking `auto` or templated
-parameters as arguments do not work. Also, the `constexpr` support isn't fully
-there yet.
+Unfinished. Works so far with callables which aren't overloaded in their
+argument types, i.e. those taking `auto` or templated parameters as arguments
+do not work. Also, the `constexpr` support isn't fully there yet.
 
 
-Can I use it?
+How to build etc.
 ==
-Sure, knock yourself out.
+You will need a C++17 capable compiler. Other than that, `libpipe` has no
+dependencies outside the STL and is header only. An aggregate header is
+provided.
+
+The first step after cloning is then probably to build and run the tests:
+
+```bash
+mkdir build && cd build
+cmake ..
+make
+./main
+```
+
+Most tests are done via `static_assert`, so if it builds, that's already a big
+win. Some tests are just `assert`s, so if you get no output from running,
+you're good to go.
+
+Next, you'll want to integrate `libpipe` into your project. In order to do
+this, you have to add the `include` directory to your include path (CMake let's
+you do this per target via `target_include_directories (target_name
+include_directories)`, in `Make` you'd just set the `-i` compiler flag, what
+other build systems do I don't know).
+
+Then just do
+
+```c++
+#include "libpipe.h"
+```
+
+and you're good to go. `make_pipeable` and `operator|` will be at your
+disposal. See usage below.
+
+
+Usage
+==
+There's a few things that work and a few things that don't. Be advised, and
+don't blame me for the compiler errors. Sorry though.
 
 ### What it works with
 Anything that can be called with one or more arguments, that is:
@@ -159,38 +194,4 @@ The _return type can be `auto`, though_. There's no harm in that. The
 arguments, however, _must be known at compile time_, which means that the
 function _must not be overloaded (or seen as overloaded due to type deduction
 by the compiler)_.
-
-
-### How to _actually use it_
-You will need a C++17 capable compiler. Other than that, `libpipe` has no
-dependencies outside the STL and is header only. An aggregate header is
-provided.
-
-The first step after cloning is then probably to build and run the tests:
-
-```bash
-mkdir build && cd build
-cmake ..
-make
-./main
-```
-
-Most tests are done via `static_assert`, so if it builds, that's already a big
-win. Some tests are just `assert`s, so if you get no output from running,
-you're good to go.
-
-Next, you'll want to integrate `libpipe` into your project. In order to do
-this, you have to add the `include` directory to your include path (CMake let's
-you do this per target via `target_include_directories (target_name
-include_directories)`, in `Make` you'd just set the `-i` compiler flag, what
-other build systems do I don't know).
-
-Then just do
-
-```c++
-#include "libpipe.h"
-```
-
-and you're good to go. `make_pipeable` and `operator|` will be at your
-disposal.
 
