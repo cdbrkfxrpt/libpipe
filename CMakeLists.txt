@@ -29,6 +29,13 @@ set (libpipe_VERSION_PATCH 0)
 #
 
 #
+# die if on Windows
+if (NOT UNIX)
+  message (FATAL_ERROR "I don't build on non-UNIX because I'm untested there.")
+endif ()
+#
+
+#
 # detect compiler
 if (CMAKE_COMPILER_IS_GNUCXX)
   if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
@@ -36,6 +43,8 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   else ()
     message (WARNING "Compiler needs to be fairly recent for this to compile.")
   endif ()
+else ()
+  add_compile_options (-stdlib=libc++ -flto=thin)
 endif ()
 #
 

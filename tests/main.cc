@@ -27,15 +27,15 @@ constexpr int add_fn(int i, int n) {
   return n + i;
 }
 
-const char * test_function_noexcept(int i, const char * n) noexcept {
-  return n + i;
-}
+// const char * test_function_noexcept(int i, const char * n) noexcept {
+//   return n + i;
+// }
 
 auto divide_fn = [](int i, int d) { return i / d; };
 
-auto test_lambda_noexcept = [](int i) noexcept {
-  return i;
-};
+// auto test_lambda_noexcept = [](int i) noexcept {
+//   return i;
+// };
 
 //
 // functors for testing arity and pipes
