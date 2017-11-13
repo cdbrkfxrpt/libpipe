@@ -195,3 +195,16 @@ arguments, however, _must be known at compile time_, which means that the
 function _must not be overloaded (or seen as overloaded due to type deduction
 by the compiler)_.
 
+
+Acknowledgements
+==
+My main source of inspiration for this was [Eric Niebler's talk at CppCon
+2015](https://www.youtube.com/watch?v=mFUXNMfaciE&t=2288s) and, of course, [his
+range-v3 library](https://github.com/ericniebler/range-v3) as well as the
+(currently not yet merged to head) [feat-192-nviews branch of the DASH
+project](https://github.com/dash-project/dash/tree/feat-192-nviews).
+
+Furthermore, I found [this great blog post by Paul Fultz
+II](http://pfultz2.com/blog/2014/09/05/pipable-functions/), which ended up
+being my most important influence for the implementation.
+
