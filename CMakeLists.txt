@@ -37,14 +37,17 @@ endif ()
 
 #
 # detect compiler
-if (CMAKE_COMPILER_IS_GNUCXX)
-  if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
-    message (FATAL_ERROR "g++ 7.0 or later required.")
-  else ()
-    message (WARNING "Compiler needs to be fairly recent for this to compile.")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.2.0)
+    message (FATAL_ERROR "g++ 7.2.0 or later required.")
   endif ()
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0.0)
+    message (FATAL_ERROR "clang 5.0.0 or later required.")
+  endif()
+  add_compile_options (-stdlib=libc++ -fuse-ld=lld -flto=thin)
 else ()
-  add_compile_options (-stdlib=libc++ -flto=thin)
+  message (WARNING "Compiler and standard library must implement C++17 for this to compile.")
 endif ()
 #
 
