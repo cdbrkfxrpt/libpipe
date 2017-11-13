@@ -23,7 +23,7 @@
 //
 // functions and lambdas for testing arity and defines
 //
-const char * test_function(int i, const char * n) {
+constexpr int add_fn(int i, int n) {
   return n + i;
 }
 
@@ -31,8 +31,11 @@ const char * test_function_noexcept(int i, const char * n) noexcept {
   return n + i;
 }
 
-auto test_lambda          = []() {};
-auto test_lambda_noexcept = []() noexcept {};
+auto divide_fn = [](int i, int d) { return i / d; };
+
+auto test_lambda_noexcept = [](int i) noexcept {
+  return i;
+};
 
 //
 // functors for testing arity and pipes
@@ -65,7 +68,7 @@ int main() {
   //
   // arity tests - not working currently
   //
-  // static_assert(pipe::arity(test_function) == 2);
+  // static_assert(pipe::arity(add_fn) == 2);
   // static_assert(pipe::arity(test_function_noexcept) == 2);
 
   // static_assert(pipe::arity(test_lambda) == 0);
@@ -81,11 +84,11 @@ int main() {
   //
   // pipes tests
   //
+  constexpr auto add       = make_pipeable(add_fn);
+  constexpr auto divide    = make_pipeable(divide_fn);
   constexpr auto increment = make_pipeable(increment_fn{});
   constexpr auto multiply  = make_pipeable(multiply_fn<int>{});
   constexpr auto modulo    = make_pipeable(modulo_fn{});
-
-  constexpr auto add = make_pipeable([](int v, int i) { return v + i; });
 
   const auto fortytwo = 41 | increment;
   static_assert(fortytwo == 42);
@@ -94,7 +97,7 @@ int main() {
   static_assert(alsofortytwo == 42);
 
   const auto anotherfortytwo =
-    19 | increment | multiply(2) | increment | increment;
+    19 | increment | multiply(4) | add(4) | divide(2);
   static_assert(anotherfortytwo == 42);
 
   const auto againfortytwo = 21 | add(21);
@@ -103,12 +106,8 @@ int main() {
   //
   // the big cahoona - not working constexpr yet
   //
-  auto alwaysfortytwo = multiply(10)
-                      | add(4)
-                      | modulo(10)
-                      | multiply(10)
-                      | increment
-                      | increment;
+  auto alwaysfortytwo =
+    multiply(10) | add(4) | modulo(10) | multiply(10) | increment | increment;
 
   assert(alwaysfortytwo(1983447) == 42);
 
