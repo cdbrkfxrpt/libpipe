@@ -47,7 +47,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   endif()
   add_compile_options (-stdlib=libc++ -flto=thin)
 else ()
-  message (WARNING "Compiler and standard library must implement C++17 for this to compile.")
+  message (FATAL_ERROR
+    "Only GNU gcc (7.2.0+) or LLVM clang (5.0.0+) compile this.")
 endif ()
 #
 
